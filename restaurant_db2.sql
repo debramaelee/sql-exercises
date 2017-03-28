@@ -68,12 +68,12 @@ insert into review values
 	(default, 3, 5, 'LOVE IT', 'I love food and this is food so it is good', 7)
 
 -- List all the reviews for a given restaurant given a specific restaurant ID.
-select * from review where restaurant_id = 1,
-select * from review where restaurant_id = 2,
-select * from review where restaurant_id = 3,
-select * from review where restaurant_id = 4,
-select * from review where restaurant_id = 5,
-select * from review where restaurant_id = 6,
+select * from review where restaurant_id = 1;
+select * from review where restaurant_id = 2;
+select * from review where restaurant_id = 3;
+select * from review where restaurant_id = 4;
+select * from review where restaurant_id = 5;
+select * from review where restaurant_id = 6;
 select * from review where restaurant_id = 7
 
 -- List all the reviews for a given restaurant, given a specific restaurant name.
@@ -84,16 +84,19 @@ select * from review, restaurant where review.restaurant_id = restaurant.id AND 
 select * from review, restaurant where review.restaurant_id = restaurant.id AND restaurant.name = 'Iron Age';
 select * from review, restaurant where review.restaurant_id = restaurant.id AND restaurant.name = 'Fox Bros';
 select * from review, restaurant where review.restaurant_id = restaurant.id AND restaurant.name = 'NaanStop';
+--EQUIVALENT
+select * from review inner join restaurant on review.restaurant_id = restaurant.id where restaurant.name = 'Chipotle';
 
 -- List all the reviews for a given reviewer, given a specific author name.
 select * from review, reviewer where review.reviewer_id = reviewer.id AND reviewer.name = 'Daniel B.';
 select * from review, reviewer where review.reviewer_id = reviewer.id AND reviewer.name = 'Debra Lee';
 select * from review, reviewer where review.reviewer_id = reviewer.id AND reviewer.name = 'Sir Eats-A-Lot';
 select * from review, reviewer where review.reviewer_id = reviewer.id AND reviewer.name = 'Holly Smith';
+--EQUIVALENT
+select * from review inner join reviewer on review.reviewer_id = reviewer.id AND reviewer.name = 'Daniel B.';
 
 -- List all the reviews along with the restaurant they were written for. In the query result, select the restaurant name and the review text.
 select restaurant.name, review.review from review, restaurant where review.restaurant_id = restaurant.id;
-
 
 -- Get the average stars by restaurant. The result should have the restaurant name and its average star rating.
 select restaurant.name, avg(review.stars) from review, restaurant where review.restaurant_id = restaurant.id group by restaurant.id;
@@ -105,9 +108,16 @@ select restaurant.name, count(review.review) from review, restaurant where revie
 select review.review, restaurant.name, reviewer.name 
 from review, restaurant, reviewer
 where review.restaurant_id = restaurant.id AND review.reviewer_id = reviewer.id;
+--EQUIVALENT
+select review.review, restaurant.name, reviewer.name 
+from reviewer
+inner join review on review.reviewer_id = review.id
+inner join restaurant on review.restaurant_id = restaurant.id 
+
 
 -- Get the average stars given by each reviewer. (reviewer name, average star rating)
 select reviewer.name, avg(review.stars) from review, reviewer where review.reviewer_id = reviewer.id group by reviewer.name;
+
 
 -- Get the lowest star rating given by each reviewer. (reviewer name, lowest star rating)
 select reviewer.name, min(review.stars) from review, reviewer where review.reviewer_id = reviewer.id group by reviewer.name;
