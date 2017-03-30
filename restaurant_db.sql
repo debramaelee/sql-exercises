@@ -46,7 +46,7 @@ select name from restaurant where distance <= 2;
 select name from restaurant where last_time_eaten_there BETWEEN '1991-03-20' AND '2017-03-20';
 
 -- restaurants you haven't ate at in the last week and has 5 stars
-select name from restaurant where last_time_eaten_there BETWEEN  '1991-03-20' AND  '2017-03-20' AND stars = '5';
+select name from restaurant where last_time_eaten_there BETWEEN  '1991-03-20' AND '2017-03-20' AND stars = '5';
 
 -- list restaurants by the closest distance.
 select * from restaurant order by distance;
